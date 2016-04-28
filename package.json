@@ -1,0 +1,21 @@
+{
+  "name": "libgit2",
+  "version": "0.24.1",
+  "description": "nodegit fork of libgit2",
+  "main": "none",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libgit2/libgit2.git"
+  },
+  "author": "Max Korp (@maximilianokorp)",
+  "contributors": [
+    {
+      "name": "John Haley",
+      "email": "john@haley.io"
+    },
+    {
+      "name": "Tim Branyen"
+    }
+  ],
+  "license": "GPLv2 with Linking Exception"
+}
