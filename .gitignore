@@ -36,3 +36,5 @@ mkmf.log
 CMakeSettings.json
 .vs
 .vscode/
+
+/cmake-build-debug/
