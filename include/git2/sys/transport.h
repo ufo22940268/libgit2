@@ -303,6 +303,7 @@ typedef struct git_smart_subtransport_stream git_smart_subtransport_stream;
  */
 struct git_smart_subtransport_stream {
 	git_smart_subtransport *subtransport; /**< The owning subtransport */
+    struct timeval start_time;
 
 	/**
 	 * Read available data from the stream.

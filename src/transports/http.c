@@ -40,6 +40,8 @@ static const char *receive_pack_service_url = "/git-receive-pack";
 static const char *get_verb = "GET";
 static const char *post_verb = "POST";
 
+#define HTTP_TIMEOUT 120
+//#define HTTP_TIMEOUT 5
 #define AUTH_HEADER_SERVER "Authorization"
 #define AUTH_HEADER_PROXY  "Proxy-Authorization"
 
@@ -1213,6 +1215,17 @@ replay:
 	}
 
 	while (!*bytes_read && !t->parse_finished) {
+        struct timeval t2;
+        double elapsedTime;
+        gettimeofday(&t2, NULL);
+        elapsedTime = (t2.tv_sec - stream->start_time.tv_sec);      // us to sec
+        if (elapsedTime > HTTP_TIMEOUT) {
+            error = -1;
+            git_error_set(GIT_ERROR_NET, "HTTP Request timeout");
+            goto done;
+        }
+//        printf("%ld ------ %ld --- %f -------\n", stream->start_time.tv_usec, t2.tv_usec,elapsedTime);
+
 		size_t data_offset;
 
 		/*
@@ -1445,6 +1458,9 @@ static int http_stream_alloc(http_subtransport *t,
 	s->parent.free = http_stream_free;
 
 	*stream = (git_smart_subtransport_stream *)s;
+    struct timeval t1;
+    gettimeofday(&t1, NULL);
+    (*stream)->start_time = t1;
 	return 0;
 }
 
